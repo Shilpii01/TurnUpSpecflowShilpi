@@ -107,10 +107,10 @@ testRunner.Given("user logs-in to TurnUp portal", ((string)(null)), ((TechTalk.S
 testRunner.And("user navigates to the time and material page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 6
-testRunner.When("user creates a new time/materail record", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+testRunner.When("user creates a new time/materail record \'New record\' \'new data record\' \'120.98\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 7
-testRunner.Then("turnup potal should saves the new record", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.Then("turnup potal should saves the new record \'New record\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -150,10 +150,11 @@ testRunner.Given("user logs-in to TurnUp portal", ((string)(null)), ((TechTalk.S
 testRunner.And("user navigates to the time and material page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 12
-testRunner.When("user edits a new time/materail record", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+testRunner.When("user edits a new time/materail record \'updated code\'\'updated description\' \'190.23" +
+                        "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 13
-testRunner.Then("turnup potal should saves the updated record", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+testRunner.Then("turnup potal should saves the updated record \'updated code\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

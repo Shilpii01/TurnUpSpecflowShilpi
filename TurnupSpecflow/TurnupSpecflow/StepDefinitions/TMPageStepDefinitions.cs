@@ -32,33 +32,38 @@ namespace TurnupSpecflow.StepDefinitions
             
         }
 
-        [When(@"user creates a new time/materail record")]
-        public void WhenUserCreatesANewTimeMaterailRecord()
+        [When(@"user creates a new time/materail record '([^']*)' '([^']*)' '([^']*)'")]
+        public void WhenUserCreatesANewTimeMaterailRecord(string code, string description, string price)
         {
             TMPage tmPageobj = new TMPage();
-            tmPageobj.CreateTimeRecord(cdriver);
+            tmPageobj.CreateTimeRecord(cdriver, code, description, price);
         }
 
-        [Then(@"turnup potal should saves the new record")]
-        public void ThenTurnupPotalShouldSavesTheNewRecord()
+        [Then(@"turnup potal should saves the new record '([^']*)'")]
+        public void ThenTurnupPotalShouldSavesTheNewRecord(string code)
         {
             TMPage tmPageobj = new TMPage();
-            tmPageobj.verifyCreatedRecord(cdriver);
+            tmPageobj.verifyCreatedRecord(cdriver, code);
+            
         }
 
-        [When(@"user edits a new time/materail record")]
-        public void WhenUserEditsANewTimeMaterailRecord()
+        [When(@"user edits a new time/materail record '([^']*)''([^']*)' '([^']*)'")]
+        public void WhenUserEditsANewTimeMaterailRecord(string updatedcode, string updateddescription, string updatedprice)
         {
-            TMPage tmPageobj = new TMPage();
-            tmPageobj.EditTimeRecord(cdriver);
+            {
+                TMPage tmPageobj = new TMPage();
+                tmPageobj.EditTimeRecord(cdriver, updatedcode, updateddescription, updatedprice);
+            }
         }
 
-        [Then(@"turnup potal should saves the updated record")]
-        public void ThenTurnupPotalShouldSavesTheUpdatedRecord()
-        {
+
+        [Then(@"turnup potal should saves the updated record '([^']*)'")]
+        public void ThenTurnupPotalShouldSavesTheUpdatedRecord(string updatedcode)
+            {
             TMPage tmPageobj = new TMPage();
-            tmPageobj.verifyUpdatedRecord(cdriver);
-        }
+            tmPageobj.verifyUpdatedRecord(cdriver , updatedcode);
+             }
+        
 
         [When(@"user deletes a new time/materail record")]
         public void WhenUserDeletesANewTimeMaterailRecord()

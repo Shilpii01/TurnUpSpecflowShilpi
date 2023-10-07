@@ -10,10 +10,10 @@ namespace TurnupSpecflow.Pages
 {
     public class TMPage
     {
-        public void CreateTimeRecord(IWebDriver cdriver)
+        public void CreateTimeRecord(IWebDriver cdriver, string code, string description, string price)
         {
             //Click on the Create new button for creating a new record in the time & materials module
-            IWebElement createnewbutton = cdriver.FindElement(By.XPath("//*[@id=\"container\"]/p/a"));
+            IWebElement createnewbutton = cdriver.FindElement(By.XPath("//a[contains(text(),'Create New')]"));
             createnewbutton.Click();
 
             //Select the type code 
@@ -27,16 +27,16 @@ namespace TurnupSpecflow.Pages
 
             //Enter the code in the Code textbox
             IWebElement codetxtbox = cdriver.FindElement(By.Id("Code"));
-            codetxtbox.SendKeys("New record");
+            codetxtbox.SendKeys(code);
 
             // Enter description in the description textbox
             IWebElement descriptiontxtbox = cdriver.FindElement(By.Id("Description"));
-            descriptiontxtbox.SendKeys("data new record");
+            descriptiontxtbox.SendKeys(description);
 
 
             //Enter the price per unit for the new record
             IWebElement pricetxtbox = cdriver.FindElement(By.XPath("//*[@id=\"TimeMaterialEditForm\"]/div/div[4]/div/span[1]/span/input[1]"));
-            pricetxtbox.SendKeys("321.45");
+            pricetxtbox.SendKeys(price);
 
             //Click on the Save button 
             IWebElement savebutton = cdriver.FindElement(By.Id("SaveButton"));
@@ -45,26 +45,27 @@ namespace TurnupSpecflow.Pages
             Thread.Sleep(6000);
         }
 
-        public void verifyCreatedRecord( IWebDriver cdriver)
+        public void verifyCreatedRecord( IWebDriver cdriver, string code)
         {
             //Check whether the new record is created successfully 
-            IWebElement lastpagebutton = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+            IWebElement lastpagebutton = cdriver.FindElement(By.XPath("//span[contains(text(),'Go to the last page')]"));
             lastpagebutton.Click();
 
             IWebElement newrecord = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            {
-                Assert.That(newrecord.Text == "New record", "No record found");
+            
+                Assert.That(newrecord.Text == code , "No record found");
 
-            }
+                cdriver.Quit();
+
 
         }
 
             
         
-        public void EditTimeRecord(IWebDriver cdriver)
+        public void EditTimeRecord(IWebDriver cdriver , string updatedcode, string updateddescription, string updatedprice)
         {
             // Go to last Page 
-            IWebElement lastpagebutton = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+            IWebElement lastpagebutton = cdriver.FindElement(By.XPath("//span[contains(text(),'Go to the last page')]"));
             lastpagebutton.Click();
 
             //Edit the new created record
@@ -82,12 +83,12 @@ namespace TurnupSpecflow.Pages
             //Edit the code textbox 
             IWebElement editcodetextbox = cdriver.FindElement(By.Id("Code"));
             editcodetextbox.Clear();
-            editcodetextbox.SendKeys("Edited code");
+            editcodetextbox.SendKeys(updatedcode);
 
             //Edit the description textbox
             IWebElement editdescriptiontextbox = cdriver.FindElement(By.Id("Description"));
             editdescriptiontextbox.Clear();
-            editdescriptiontextbox.SendKeys("Edited description");
+            editdescriptiontextbox.SendKeys(updateddescription);
             Thread.Sleep(2000);
 
             //Edit price textbox
@@ -97,7 +98,7 @@ namespace TurnupSpecflow.Pages
             editpricetextbox.Clear();
             editpriceoverlappingtag.Click();
 
-            editpricetextbox.SendKeys("980.76");
+            editpricetextbox.SendKeys(updatedprice);
 
             //Download the edited record 
             IWebElement downloadbutton = cdriver.FindElement(By.Id("downloadButton"));
@@ -110,15 +111,16 @@ namespace TurnupSpecflow.Pages
             Thread.Sleep(4000);
         }
 
-        public void verifyUpdatedRecord(IWebDriver cdriver)
+        public void verifyUpdatedRecord(IWebDriver cdriver, string updatedcode)
         {
             //Check if the last record is edited successfully 
-            IWebElement endpagebutton = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+            IWebElement endpagebutton = cdriver.FindElement(By.XPath("//span[contains(text(),'Go to the last page')]"));
             endpagebutton.Click();
 
             IWebElement editedrecord = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
 
-            Assert.That(editedrecord.Text == "Edited code", "record has not been edited");
+            Assert.That(editedrecord.Text == updatedcode, "record has not been edited");
+            cdriver.Quit();
         }
 
 
@@ -128,7 +130,7 @@ namespace TurnupSpecflow.Pages
         public void DeleteTimeRecord(IWebDriver cdriver)
         {
             // Go to last Page 
-            IWebElement lastpagebutton = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[4]/a[4]/span"));
+            IWebElement lastpagebutton = cdriver.FindElement(By.XPath("//span[contains(text(),'Go to the last page')]"));
             lastpagebutton.Click();
 
             //Delete the last created record
@@ -146,9 +148,9 @@ namespace TurnupSpecflow.Pages
         public void verifyDeletedRecord(IWebDriver cdriver)
         {
             IWebElement deletedrecord = cdriver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            {
+            
                 Assert.That(deletedrecord.Text != "Edited code", "record has not been deleted ");
-            }
+                cdriver.Quit();
 
         }
 
