@@ -1,10 +1,12 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TurnupSpecflow.Utilities;
 
 namespace TurnupSpecflow.Pages
 {
@@ -12,6 +14,10 @@ namespace TurnupSpecflow.Pages
     {
         public void CreateTimeRecord(IWebDriver cdriver, string code, string description, string price)
         {
+            // WebDriverWait webDriverWait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            //webDriverWait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//*[@id=\"container\"]/p/a")));
+            Wait.WaitToBeClickabel(cdriver, "Xpath", "//*[@id=\"container\"]/p/a", 5);
+
             //Click on the Create new button for creating a new record in the time & materials module
             IWebElement createnewbutton = cdriver.FindElement(By.XPath("//a[contains(text(),'Create New')]"));
             createnewbutton.Click();
@@ -27,9 +33,11 @@ namespace TurnupSpecflow.Pages
 
             //Enter the code in the Code textbox
             IWebElement codetxtbox = cdriver.FindElement(By.Id("Code"));
+            Wait.WaitToBeClickabel(cdriver, "Id", "Code", 7);
             codetxtbox.SendKeys(code);
 
             // Enter description in the description textbox
+            Wait.WaitToBeVisible(cdriver, "Id", "Description", 7);
             IWebElement descriptiontxtbox = cdriver.FindElement(By.Id("Description"));
             descriptiontxtbox.SendKeys(description);
 
@@ -42,7 +50,7 @@ namespace TurnupSpecflow.Pages
             IWebElement savebutton = cdriver.FindElement(By.Id("SaveButton"));
             savebutton.Click();
 
-            Thread.Sleep(6000);
+            Thread.Sleep(4000);
         }
 
         public void verifyCreatedRecord( IWebDriver cdriver, string code)
@@ -113,6 +121,7 @@ namespace TurnupSpecflow.Pages
 
         public void verifyUpdatedRecord(IWebDriver cdriver, string updatedcode)
         {
+            
             //Check if the last record is edited successfully 
             IWebElement endpagebutton = cdriver.FindElement(By.XPath("//span[contains(text(),'Go to the last page')]"));
             endpagebutton.Click();
@@ -129,6 +138,7 @@ namespace TurnupSpecflow.Pages
 
         public void DeleteTimeRecord(IWebDriver cdriver)
         {
+            Wait.WaitToBeClickabel(cdriver, "Xpath", "//span[contains(text(),'Go to the last page')]", 5);
             // Go to last Page 
             IWebElement lastpagebutton = cdriver.FindElement(By.XPath("//span[contains(text(),'Go to the last page')]"));
             lastpagebutton.Click();

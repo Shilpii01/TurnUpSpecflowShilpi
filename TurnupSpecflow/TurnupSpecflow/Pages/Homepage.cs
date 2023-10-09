@@ -12,10 +12,17 @@ namespace TurnupSpecflow.Pages
     {
         public void GoToTMPage(IWebDriver cdriver)
         {
-            //Navigate to the administration dropdown 
+            try
+            {
+                //Navigate to the administration dropdown 
 
-            IWebElement administrationdropdown = cdriver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
-            administrationdropdown.Click();
+                IWebElement administrationdropdown = cdriver.FindElement(By.XPath("/html/body/div[3]/div/div/ul/li[5]/a"));
+                administrationdropdown.Click();
+            }
+           catch(Exception exception)
+            {
+                Assert.Fail("Turnup portal is not available", exception.Message);
+            }
 
             //Select time & materials module 
 
